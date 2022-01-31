@@ -1,15 +1,16 @@
 import { useState, useEffect } from 'react';
+import usePersistentState from '../../hooks/usePersistentState';
 
 function ControlledInput() {
-  const [text, setText] = useState(localStorage.getItem("text") || "");
+  //const [text, setText] = useState(localStorage.getItem("text") || "");
+const {handleChange, text} = usePersistentState()
+  // useEffect(() => {
+  // localStorage.setItem("text", text);
+  // }, [text]);
 
-  useEffect(() => {
-    localStorage.setItem("text", text);
-  }, [text]);
-
-  function handleChange(e) {
-    setText(e.target.value);
-  }
+  // function handleChange(e) {
+  //   setText(e.target.value);
+  // }
   return (
     <div>
       <h4>You can refresh, but I will remain!!</h4>
