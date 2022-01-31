@@ -1,4 +1,5 @@
 import { useState } from "react";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 
 function BasicCounter() {
   const [count, setCount] = useState(0);
@@ -10,6 +11,7 @@ function BasicCounter() {
   }
   return (
     <div>
+      {useDocumentTitle(count)}
       <h4>Basic Counter</h4>
       <button onClick={decrement}>Less</button>
       <output>{count}</output>
