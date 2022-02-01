@@ -1,32 +1,35 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import useFetch from "../../hooks/useFetch";
 
 function PokemonViewer() {
-  const [pokemon, setPokemon] = useState(null);
-  const [error, setError] = useState(null);
   const [id, setId] = useState("");
 
-  useEffect(() => {
-    if (id) {
-      fetch(`https://pokeapi.co/api/v2/pokemon/${id}`, {
-        headers: { Accept: "application/json" },
-      })
-        .then((res) => res.json())
-        .then((poke) => setPokemon(poke))
-        .catch((err) => setError(err));
-    }
-  }, [id]);
+  let url = `https://pokeapi.co/api/v2/pokemon/${id}`;
+
+  // useEffect(() => {
+  //   if (id) {
+  //     fetch(`https://pokeapi.co/api/v2/pokemon/${id}`, {
+  //       headers: { Accept: "application/json" },
+  //     })
+  //       .then((res) => res.json())
+  //       .then((poke) => setPokemon(poke))
+  //       .catch((err) => setError(err));
+  //   }
+  // }, [id]);
+
+  const { data, error } = useFetch(url);
 
   if (error) {
     console.log(error);
-    console.log(pokemon);
+    console.log(data);
     return <p>Error!</p>;
   }
-
+  data && console.log(data.name);
   return (
     <section>
       <h4>Pokemon</h4>
       <input type="number" onChange={(e) => setId(e.target.value)} value={id} />
-      {pokemon && <p>{pokemon.name}</p>}
+      {data && <p>{data.name}</p>}
     </section>
   );
 }
